@@ -137,8 +137,6 @@ body {
     footer p {
         width: 100%;
     }
-
-
 }
 /* Tablets vertical */
 @media (orientation: portrait) and (min-width: 768px) and (max-width: 800px) {
