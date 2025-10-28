@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="SecSites.css">
+</head>
+<body>
+    <header>
+        <h1>
+            Calculadora
+        </h1>
+        <div>
+            <p id="tempNum">SCO_TClor</p>
+            <p id="operator">o</p>
+            <h3 id="result">
+                resultado
+            </h3>
+        </div>
+    </header>
+    <main>
+        <input type="number" id="input" placeholder="Digite o valor inicial...">
+        <section>
+            <button onclick="addNumb('7')">7</button>
+            <button onclick="addNumb('8')">8</button>
+            <button onclick="addNumb('9')">9</button>
+            <button onclick="calcOne('/')">÷</button>
+            <button onclick="cleanInput()">C</button><!--ae-->
+            <button onclick="addNumb('4')">4</button>
+            <button onclick="addNumb('5')">5</button>
+            <button onclick="addNumb('6')">6</button>
+            <button onclick="calcOne('*')">×</button>
+            <button onclick="addNumb('9')">9</button><!--ae-->
+            <button onclick="addNumb('1')">1</button>
+            <button onclick="addNumb('2')">2</button>
+            <button onclick="addNumb('3')">3</button>
+            <button onclick="calcOne('-')">-</button>
+            <button onclick="addNumb('9')">9</button><!--ae-->
+            <button onclick="calcOne('+')">+/-</button>
+            <button onclick="addNumb('0')">0</button>
+            <button onclick="calcOne(',')">,</button>
+            <button onclick="calcOne('+')">+</button>
+            <button onclick="calcOne('=')">=</button><!--ae-->
+        </section>
+    </main>
+    <script src="SecSites.js"></script>
+</body>
+</html>
