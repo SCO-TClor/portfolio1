@@ -1,3 +1,4 @@
+let momentoDoDia;
 function mudaTempo() {
     // Horário e Data atual
     const horarioAtual = new Date();
@@ -22,6 +23,7 @@ function mudaTempo() {
             horasFalt = 11 - horaAtual;
         };
         document.getElementById('momento').innerHTML = `Manhã - ${horasFalt}h ${minFalt} min restantes`;
+        momentoDoDia = 'manha';
     }
     else if (horaAtual >= 12 && horaAtual < 18) {
         if (minutoAtual == 0) {
@@ -33,6 +35,7 @@ function mudaTempo() {
             horasFalt = 17 - horaAtual;
         };
         document.getElementById('momento').innerHTML = `Tarde - ${horasFalt}h ${minFalt} min restantes`;
+        momentoDoDia = 'tarde';
     }
     else if (horaAtual >= 18 && horaAtual < 24) {
         if (minutoAtual == 0) {
@@ -44,6 +47,7 @@ function mudaTempo() {
             horasFalt = 23 - horaAtual;
         };
         document.getElementById('momento').innerHTML = `Noite - ${horasFalt}h ${minFalt} min restantes`;
+        momentoDoDia = 'noite';
     };
 }
 setInterval(mudaTempo,500);
