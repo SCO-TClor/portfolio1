@@ -9,7 +9,7 @@
 }
 :root[data-momento="tarde"] {
     --bgcolor: #05a3ff;
-    --color-theme: black;
+    --color-theme: white;
 }
 :root[data-momento="noite"] {
     --bgcolor: #0B132B;
@@ -21,9 +21,10 @@
     box-sizing: border-box;
 }
 body {
-    width: 100vw;
+    width: 100%;
+    height: 100vh;
     height: 100svh;
-    height: 100dvh;
+    height: 100dvh;
     color: #E0E6ED;
 }
 .container {
@@ -79,7 +80,6 @@ main {
     background-image: linear-gradient(to top, var(--color-theme), var(--bgcolor), var(--bgcolor));
     flex-wrap: wrap;
     padding: 4vw;
-    gap: 3vw;
 }
 .links {
     align-items: center;
@@ -148,17 +148,60 @@ footer {
 footer p {
     width: 100%;
 }
-/* Tablets vertical */
-@media (orientation: portrait) and (min-width: 768px) and (max-width: 800px) {
+/* Tablets */
+@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+    /* Body e containter */
+    .container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 250px 1fr auto;
+    }
+    /* Header */
+    header {
+        grid-column: 1 / 3;
+    }
+    /* Titulo */
 
-}
-/* Tablets horizontal */
-@media (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+    /* Horário */
 
+    /* Section */
+    section {
+        display: flex;
+        grid-column: 2;
+        grid-row: 2;
+        background-image: linear-gradient(to top, var(--color-theme), var(--bgcolor), var(--bgcolor));
+        padding: 4vw;
+        color: black;
+    }
+    .sessao {
+        background-color: #1C2541;
+        text-align: center;
+        border: 2px solid #9FE7F5;
+        border-radius: 20px;
+        padding: 2vh 2vh;
+    }
+    .addBnt {
+        position: absolute;
+        background-color: wheat;
+        width: 40px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        align-content: center;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    /* Main */
+
+    /* Footer */
+    footer {
+        grid-column: 1 / 3;
+    }
 }
 /* Desktop comum */
 @media (min-width: 1024px) and (max-width: 1279px) {
-    
+    main {
+        background-image: linear-gradient(to top, white, green, green);
+    }
 }
 /* Desktop grande */
 @media (min-width: 1280px) and (max-width: 1439px) {

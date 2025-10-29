@@ -1,4 +1,18 @@
+// Declaração de variáveis:
 let momentoDoDia;
+// Alterador de tema:
+function themeChanger(momento) {
+    if (momentoDoDia == 'manha') {
+        document.documentElement.dataset.momento = "manha";
+    }
+    else if (momentoDoDia == 'tarde') {
+        document.documentElement.dataset.momento = "tarde";
+    }
+    else if (momentoDoDia == 'noite') {
+        document.documentElement.dataset.momento = "noite";
+    };
+};
+// Relógio em tempo real:
 function mudaTempo() {
     // Horário e Data atual
     const horarioAtual = new Date();
@@ -24,6 +38,7 @@ function mudaTempo() {
         };
         document.getElementById('momento').innerHTML = `Manhã - ${horasFalt}h ${minFalt} min restantes`;
         momentoDoDia = 'manha';
+        document.addEventListener('DOMContentLoaded', themeChanger(momentoDoDia));
     }
     else if (horaAtual >= 12 && horaAtual < 18) {
         if (minutoAtual == 0) {
@@ -36,6 +51,7 @@ function mudaTempo() {
         };
         document.getElementById('momento').innerHTML = `Tarde - ${horasFalt}h ${minFalt} min restantes`;
         momentoDoDia = 'tarde';
+        document.addEventListener('DOMContentLoaded', themeChanger(momentoDoDia));
     }
     else if (horaAtual >= 18 && horaAtual < 24) {
         if (minutoAtual == 0) {
@@ -48,10 +64,12 @@ function mudaTempo() {
         };
         document.getElementById('momento').innerHTML = `Noite - ${horasFalt}h ${minFalt} min restantes`;
         momentoDoDia = 'noite';
+        document.addEventListener('DOMContentLoaded', themeChanger(momentoDoDia));
     };
 }
-setInterval(mudaTempo,500);
+setInterval(mudaTempo,1000);
 mudaTempo();
+// Pesquisa Online:
 document.addEventListener('DOMContentLoaded', () => {
     const pesquisa = document.getElementById('pesquisa');
     if (!pesquisa) {
