@@ -1,5 +1,10 @@
 // Declaração de variáveis:
-let momentoDoDia;
+let taskInitCriada = false;
+let momentoDoDia;           
+let quantidadeDeTasks = (Number(localStorage.getItem('tasks')) || 0);
+const taskButton = document.getElementById('button');                       // Auto-explicativo
+const inputTasks = document.getElementById('inputTasksID');                 // Shortcut para as Tasks
+const menuTasks = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
 // Alterador de tema:
 function themeChanger(momento) {
     if (momentoDoDia == 'manha') {
@@ -66,11 +71,11 @@ function mudaTempo() {
         momentoDoDia = 'noite';
         document.addEventListener('DOMContentLoaded', themeChanger(momentoDoDia));
     };
-}
+};
 setInterval(mudaTempo,1000);
 mudaTempo();
 // Pesquisa Online:
-document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     const pesquisa = document.getElementById('pesquisa');
     if (!pesquisa) {
         return;
@@ -86,4 +91,77 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
-
+// Criador de tasks:
+taskButton.addEventListener('click', () => {
+    if (!taskInitCriada) {
+        menuTasks.textContent = '';
+        taskInitCriada = true;
+    };
+    // Criação das Tasks:
+    const divTask = document.createElement('p');
+    const inputTaskCriado = document.createElement('input');
+    const editButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
+    inputTaskCriado.dataset.inputQuest = 'inputAdded';
+    // Distribuição de classes de estilo:
+    editButton.className = 'editButton';
+    deleteButton.className = 'editButton';
+    divTask.className = 'tasks';
+    inputTaskCriado.className = 'inputTasks';
+    // Relacionamento de botões:
+    editButton.innerHTML = '&#x270D;';
+    editButton.dataset.cargoBotao = 'edita';
+    deleteButton.innerHTML = '&#10060;';
+    deleteButton.dataset.cargoBotao = 'deleta';
+    // Inserção no documento:
+    divTask.append(inputTaskCriado);
+    divTask.append(editButton);
+    divTask.append(deleteButton);
+    menuTasks.append(divTask);
+    inputTaskCriado.focus();
+});
+menuTasks.addEventListener('click', (e) => {
+    // Botões de editar e excluir task atual:
+    const taskAtual = e.target.closest('p');
+    const botaoDeEdicao = e.target.closest('button');
+    if (!botaoDeEdicao || !menuTasks.contains(botaoDeEdicao)) return;
+    if (!botaoDeEdicao.classList.contains('editButton')) return;
+    // Botão de deletar:
+    if (botaoDeEdicao.dataset.cargoBotao === 'deleta') {
+        taskAtual.remove();
+        if (menuTasks.innerHTML === '') {
+            menuTasks.textContent = 'Digite + para adicionar uma nova tarefa';
+            taskInitCriada = false;
+        };
+    };
+    // Botão de editar:
+    if (botaoDeEdicao.dataset.cargoBotao === 'edita') {
+        const textSpan = taskAtual.querySelector('span');
+        if (!textSpan) return;
+        const novoInput = document.createElement('input');
+        novoInput.className = 'inputTasks';
+        novoInput.value = textSpan.textContent;
+        taskAtual.replaceChild(novoInput, textSpan);
+        novoInput.focus();
+    };
+});
+// Transformador em texto:
+menuTasks.addEventListener('keydown', (e) => {
+    if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'text' || e.key !== 'Enter') return;
+    const input = e.target.value.trim();
+    const taskAtual = e.target.closest('p');
+    if (input == '' || !taskAtual) return;
+    const spanzin = document.createElement('span');
+    spanzin.append(input);
+    e.target.replaceWith(spanzin);
+});
+// Calculo da quantidade de tasks ativas:
+function tasksCalc() {
+    const tasksVazias = menuTasks.querySelectorAll('p:has(input)');
+    const totalDeTasks = menuTasks.querySelectorAll('p');
+    const totalDeTasksEmNumero = totalDeTasks.length;
+    const todosOsJogos = tasksVazias.length;
+    const tasksCompletas = totalDeTasksEmNumero - todosOsJogos;
+    localStorage.setItem('tasks', String(tasksCompletas));
+};
+setInterval(tasksCalc, 1000);

@@ -28,11 +28,11 @@ body {
     color: #E0E6ED;
 }
 .container {
-        display: grid;
-        width: 100%;
-        height: 100%;
-        grid-template-columns: auto;
-        grid-template-rows: 200px 1fr auto;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: auto;
+    grid-template-rows: 200px 1fr auto;
 }
 header {
     grid-row: 1;
@@ -95,13 +95,26 @@ main a {
     text-decoration: none;
     flex-wrap: wrap;
     width: 30%;
-    height: 40%;
+    aspect-ratio: 1/1.4;
     justify-content: center;
     color: black;
     font-weight: bold;
     border-radius: 25px;
     border: black 2px solid;
     align-content: center;
+}
+.inputSearch {
+    margin-top: 4vw;
+    width: calc(100% - 8vw);
+    background-color: transparent;
+    border: #9FE7F5 solid 2px;
+    border-radius: 20px;
+    padding-left: 8px;
+    outline: none;
+    cursor: text;
+    color: #E0E6ED;
+    height: 1.5rem;
+    font-size: 1.1rem;
 }
 .imgLinks {
     width: 80%;
@@ -126,9 +139,8 @@ main a {
     padding: 0 2vh;
     padding-bottom: 8vh;
 }
-input {
-    margin-top: 4vw;
-    width: calc(100% - 8vw);
+.inputTasks {
+    width: 100%;
     background-color: transparent;
     border: #9FE7F5 solid 2px;
     border-radius: 20px;
@@ -149,7 +161,7 @@ footer p {
     width: 100%;
 }
 /* Tablets */
-@media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     /* Body e containter */
     .container {
         grid-template-columns: 1fr 1fr;
@@ -170,14 +182,21 @@ footer p {
         grid-row: 2;
         background-image: linear-gradient(to top, var(--color-theme), var(--bgcolor), var(--bgcolor));
         padding: 4vw;
-        color: black;
+        color: white;
+        position: relative;
+        width: 100%;
     }
     .sessao {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
         background-color: #1C2541;
         text-align: center;
         border: 2px solid #9FE7F5;
         border-radius: 20px;
         padding: 2vh 2vh;
+        width: 100%;
+        gap: 2vw;
     }
     .addBnt {
         position: absolute;
@@ -189,6 +208,31 @@ footer p {
         text-align: center;
         font-size: 2rem;
         font-weight: bold;
+        right: 0;
+        margin-right: 5vw;
+        margin-top: 1vw;
+    }
+    .tasks {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        gap: 5%;
+        width: 100%;
+        background-color: #0B132B;
+        font-size: 1.2rem;
+        border: black 2px solid;
+        border-radius: 15px;
+        padding: 0.5rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+    .editButton {
+        margin-top: 3%;
+        width: 10%;
+        aspect-ratio: 1/1;
+        background-color: #0B132B;
+        border-radius: 8px;
+        border: #05a3ff 1px solid;
     }
     /* Main */
 
