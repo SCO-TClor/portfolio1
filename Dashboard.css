@@ -211,6 +211,7 @@ footer p {
         right: 0;
         margin-right: 5vw;
         margin-top: 1vw;
+        cursor: pointer;
     }
     .tasks {
         display: flex;

@@ -2,6 +2,7 @@
 let taskInitCriada = false;
 let momentoDoDia;           
 let quantidadeDeTasks = (Number(localStorage.getItem('tasks')) || 0);
+let textTemp;
 const taskButton = document.getElementById('button');                       // Auto-explicativo
 const inputTasks = document.getElementById('inputTasksID');                 // Shortcut para as Tasks
 const menuTasks = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
@@ -72,10 +73,10 @@ function mudaTempo() {
         document.addEventListener('DOMContentLoaded', themeChanger(momentoDoDia));
     };
 };
-setInterval(mudaTempo,1000);
+setInterval(mudaTempo, 1000);
 mudaTempo();
 // Pesquisa Online:
-    document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const pesquisa = document.getElementById('pesquisa');
     if (!pesquisa) {
         return;
@@ -86,11 +87,46 @@ mudaTempo();
             e.preventDefault()
             const question = pesquisa.value;
             if (!question) return;
-            window.open('https://www.google.com/search?q=' + question, '_blank');
+            window.open('https://www.google.com/search?q=' + question);
             document.getElementById('pesquisa').value = '';
         };
     });
 });
+// Calculo da quantidade de tasks ativas:
+function tasksCalc(input) {
+    const nivelTaskAntigo = localStorage.getItem('tasks');
+    // Calcular quantidade de tasks:
+    const tasksVazias = menuTasks.querySelectorAll('p:has(input)');
+    const totalDeTasks = menuTasks.querySelectorAll('p');
+    const totalDeTasksEmNumero = totalDeTasks.length;
+    const todosOsJogos = tasksVazias.length;
+    const tasksCompletas = totalDeTasksEmNumero - todosOsJogos;
+    localStorage.setItem('tasks', String(tasksCompletas));
+    // Nomeação da quantidade:
+    const nivelTaskAtual = localStorage.getItem('tasks');
+    console.log(nivelTaskAtual +' tasks ativas');
+    if (input == '') return;
+    if (parseFloat(nivelTaskAntigo) < parseFloat(nivelTaskAtual)) {
+        localStorage.setItem(String(input), nivelTaskAtual);
+    }
+    else if (parseFloat(nivelTaskAntigo) > parseFloat(nivelTaskAtual)) {
+        localStorage.removeItem(String(input));
+    }
+};
+// Guarda as tasks ativas:
+function saveTasks(input) {
+    const tasksTotal = localStorage.getItem('tasks');       // Total de tasks ativas
+    console.log(input);
+    localStorage.setItem(tasksTotal,input);
+    console.log(localStorage);
+};
+// Apaga as tasks guardadas no localStorage:
+function deleteTasks(e) {
+    const delTask = (e.target.contains(closest('span')));
+    if (delTask === false) return;
+    const quantasTasks = localStorage.getItem('task');
+
+};
 // Criador de tasks:
 taskButton.addEventListener('click', () => {
     if (!taskInitCriada) {
@@ -119,16 +155,28 @@ taskButton.addEventListener('click', () => {
     divTask.append(deleteButton);
     menuTasks.append(divTask);
     inputTaskCriado.focus();
+    tasksCalc();
 });
+// Botões de edição:
 menuTasks.addEventListener('click', (e) => {
     // Botões de editar e excluir task atual:
+    let valorInput;
     const taskAtual = e.target.closest('p');
     const botaoDeEdicao = e.target.closest('button');
     if (!botaoDeEdicao || !menuTasks.contains(botaoDeEdicao)) return;
     if (!botaoDeEdicao.classList.contains('editButton')) return;
     // Botão de deletar:
     if (botaoDeEdicao.dataset.cargoBotao === 'deleta') {
+        const tipoDeTaskInput = taskAtual.querySelector('input');
+        const tipoDeTaskSpan = taskAtual.querySelector('span');
+        if (tipoDeTaskSpan) {
+            valorInput = (tipoDeTaskSpan.textContent || '');
+        }
+        else if(tipoDeTaskInput) {
+            valorInput = (tipoDeTaskInput.value || '');
+        };
         taskAtual.remove();
+        tasksCalc(valorInput);
         if (menuTasks.innerHTML === '') {
             menuTasks.textContent = 'Digite + para adicionar uma nova tarefa';
             taskInitCriada = false;
@@ -137,12 +185,14 @@ menuTasks.addEventListener('click', (e) => {
     // Botão de editar:
     if (botaoDeEdicao.dataset.cargoBotao === 'edita') {
         const textSpan = taskAtual.querySelector('span');
+        const textoAntigo = textSpan.textContent;
         if (!textSpan) return;
         const novoInput = document.createElement('input');
         novoInput.className = 'inputTasks';
-        novoInput.value = textSpan.textContent;
+        novoInput.value = textoAntigo;
         taskAtual.replaceChild(novoInput, textSpan);
         novoInput.focus();
+        tasksCalc(textoAntigo);
     };
 });
 // Transformador em texto:
@@ -154,14 +204,5 @@ menuTasks.addEventListener('keydown', (e) => {
     const spanzin = document.createElement('span');
     spanzin.append(input);
     e.target.replaceWith(spanzin);
+    tasksCalc(input);
 });
-// Calculo da quantidade de tasks ativas:
-function tasksCalc() {
-    const tasksVazias = menuTasks.querySelectorAll('p:has(input)');
-    const totalDeTasks = menuTasks.querySelectorAll('p');
-    const totalDeTasksEmNumero = totalDeTasks.length;
-    const todosOsJogos = tasksVazias.length;
-    const tasksCompletas = totalDeTasksEmNumero - todosOsJogos;
-    localStorage.setItem('tasks', String(tasksCompletas));
-};
-setInterval(tasksCalc, 1000);
