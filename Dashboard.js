@@ -5,8 +5,10 @@ const taskButton = document.getElementById('button');                       // A
 const menuTasks = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
 // Tasks Loader:
 document.addEventListener('DOMContentLoaded', () => {
-    const batata = JSON.parse(localStorage.getItem('tasks'));
-    if (batata.length != (0 || null)) {
+    const batata = (JSON.parse(localStorage.getItem('tasks')) || []);
+    console.log(batata);
+    const ventilador_8_helices = batata.length > 0 ? true : false;
+    if (ventilador_8_helices) {
         menuTasks.innerHTML = '';
     }
     else {
@@ -16,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Criação das Tasks:
         const divTask = document.createElement('p');
         const spanzin = document.createElement('span');
-                            // const inputTaskCriado = document.createElement('input');
         const editButton = document.createElement('button');
         const deleteButton = document.createElement('button');
         // Distribuição de classes de estilo:
