@@ -216,7 +216,8 @@ menuTasks.addEventListener('click', (e) => {
 });
 // Transformador em texto:
 menuTasks.addEventListener('keydown', (e) => {
-    if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'text' || e.key !== 'Enter') return;
+    if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'text') return;
+    if (e.key !== 'Enter' || e.keyCode !== 13) return;
     const input = e.target.value.trim();
     const taskAtual = e.target.closest('p');
     if (input == '' || !taskAtual) return;
