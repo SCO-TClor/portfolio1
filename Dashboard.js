@@ -5,7 +5,7 @@ const taskButton = document.getElementById('button');                       // A
 const menuTasks = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
 // Tasks Loader:
 document.addEventListener('DOMContentLoaded', () => {
-    const batata = (JSON.parse(localStorage.getItem('tasks')) || []);
+    const batata = (JSON.parse(localStorage.getItem('tasks')) || 0);
     console.log(batata);
     const ventilador_8_helices = batata.length > 0 ? true : false;
     if (ventilador_8_helices) {
