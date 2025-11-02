@@ -6,7 +6,7 @@ const menuTasks = document.getElementById('taskMenu');                      // D
 // Tasks Loader:
 document.addEventListener('DOMContentLoaded', () => {
     const batata = JSON.parse(localStorage.getItem('tasks'));
-    if (batata.length != 0) {
+    if (batata.length != (0 || null)) {
         menuTasks.innerHTML = '';
     }
     else {
