@@ -6,14 +6,29 @@
 :root[data-momento="manha"] {
     --bgcolor: #ffd500;
     --color-theme: black;
+    --container-color: #4b3f038f;
+    --font-color: rgb(243, 255, 175);
+    --border-color: black;
+    --container-link: #0405004b;
+    --container-link-fcolor: #c4c5c4;
 }
 :root[data-momento="tarde"] {
     --bgcolor: #05a3ff;
     --color-theme: white;
+    --container-color: #06203a8f;
+    --font-color: black;
+    --border-color: black;
+    --container-link: #0002058f;
+    --container-link-fcolor: #ffffff;
 }
 :root[data-momento="noite"] {
     --bgcolor: #0B132B;
     --color-theme: black;
+    --container-color: #3745548f;
+    --font-color: rgb(197, 195, 206);
+    --border-color: rgb(103, 140, 167);
+    --container-link: #51606fad;
+    --container-link-fcolor: #000000;
 }
 * {
     margin: 0;
@@ -28,14 +43,15 @@ body {
     height: 100vh;
     height: 100svh;
     height: 100dvh;
-    color: #E0E6ED;
+    color: var(--font-color);
+    background-color: var(--bgcolor);
 }
 .container {
     display: grid;
     width: 100%;
     height: 100%;
     grid-template-columns: auto;
-    grid-template-rows: 200px 1fr auto;
+    grid-template-rows: 210px 1fr auto;
 }
 header {
     grid-row: 1;
@@ -47,19 +63,19 @@ header {
 }
 .titulo {
     width: 100%;
-    background-color: #1C2541;
+    background-color: var(--container-color);
     text-align: center;
     align-content: center;
-    border: 2px solid #9FE7F5;
-    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 2rem;
 }
 .info {
     width: 100%;
-    background-color: #1C2541;
+    background-color: var(--container-color);
     text-align: center;
     align-content: center;
-    border: 2px solid #9FE7F5;
-    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 2rem;
 }
 #clock {
     font-size: 2.1em;
@@ -79,12 +95,14 @@ aside {
 #main {
     width: 100%;
     height: 100%;
-    background-color: #1C2541;
+    background-color: var(--container-color);
     text-align: center;
-    border: 2px solid #9FE7F5;
-    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 2rem;
     padding: 0 1rem;
-    padding-bottom: 8vh;
+    padding-bottom: 1rem;
+    align-content: center;
+    justify-content: center;
     overflow-y: auto;
 }
 main {
@@ -97,49 +115,54 @@ main {
     flex-wrap: wrap;
     padding: 1rem 3rem 2rem;
     overflow-y: auto;
-    justify-items: center;
+    justify-content: center;
+    align-content: center;
 }
 .links {
-    align-items: center;
     height: auto;
     min-height: 0;
     display: flex;
     flex-wrap: wrap;
-    padding: 2vh 2vh 2vh 0;
-    gap: 5%;
+    padding: 2rem 0 0 0;
+    gap: 0.4rem;
     row-gap: 1rem;
     justify-content: center;
+    align-content: center;
 }
 main a {
-    background-color: #3b4153;
+    box-sizing: content-box;
+    background-color: var(--container-link);
     text-decoration: none;
     flex-wrap: wrap;
     width: 30%;
     aspect-ratio: 1/1.4;
     justify-content: center;
-    color: black;
+    color: var(--container-link-fcolor);
     font-weight: bold;
-    border-radius: 25px;
-    border: black 2px solid;
+    border-radius: 1rem;
+    border: var(--border-color) 2px solid;
     align-content: center;
 }
 .inputSearch {
     display: block;
     justify-self: center;
-    margin-top: 4vw;
+    margin-top: 1rem;
     width: calc(100% - 8vw);
     background-color: transparent;
-    border: #9FE7F5 solid 2px;
-    border-radius: 20px;
-    padding-left: 8px;
+    border: var(--border-color) solid 2px;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;
     outline: none;
     cursor: text;
     color: #E0E6ED;
-    height: 1.5em;
+    height: 1.5rem;
     font-size: 1.1rem;
 }
+.inputSearch::placeholder{
+    color: var(--font-color);
+}
 .imgLinks {
-    width: 80%;
+    width: 90%;
     aspect-ratio: 1/1;
 }
 .history {
@@ -154,6 +177,7 @@ main a {
 footer {
     grid-row: 3;
     background-color: black;
+    color: wheat;
     display: flex;
     flex-wrap: wrap;
 }
@@ -175,12 +199,13 @@ footer p {
     /* Titulo */
 
     /* Horário */
+    
     /* Main */
     .inputSearch {
         font-size: 1.5em;
         margin: 2rem 0;
         width: calc(90%);
-        border: #9FE7F5 solid 2px;
+        border: var(--border-color) solid 2px;
         height: 1.4em;
     }
     main {
@@ -203,16 +228,12 @@ footer p {
         align-content: center;
     }
     main a {
-        background-color: #3b4153;
         text-decoration: none;
         flex-wrap: wrap;
         width: 30%;
         aspect-ratio: 1/1.4;
         justify-content: center;
-        color: black;
         font-weight: bold;
-        border-radius: 25px;
-        border: black 2px solid;
         align-content: center;
     }
 
@@ -223,7 +244,7 @@ footer p {
         grid-row: 2;
         background-image: linear-gradient(to top, var(--color-theme), var(--bgcolor), var(--bgcolor));
         padding: 4vw;
-        padding: 0 2rem;
+        padding: 0 2rem 1rem;
         color: white;
         position: relative;
         width: 100%;
@@ -233,10 +254,10 @@ footer p {
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
-        background-color: #1C2541;
+        background-color: var(--container-color);
         text-align: center;
-        border: 2px solid #9FE7F5;
-        border-radius: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 2rem;
         padding: 2vh 2vh;
         width: 100%;
         gap: 1rem;
@@ -264,9 +285,10 @@ footer p {
         justify-content: left;
         gap: 5%;
         width: 100%;
-        background-color: #0B132B;
+        background-color: var(--container-link);
+        color: var(--container-link-fcolor);
         font-size: 1.2rem;
-        border: black 2px solid;
+        border: var(--border-color) 2px solid;
         border-radius: 15px;
         padding: 0.5rem;
         white-space: normal;
@@ -275,18 +297,18 @@ footer p {
     .inputTasks {
         width: 100%;
         background-color: transparent;
-        border: #9FE7F5 solid 2px;
+        border: var(--border-color) solid 2px;
         border-radius: 20px;
         padding-left: 8px;
         outline: none;
         cursor: text;
-        color: #E0E6ED;
+        color: var(--container-link-fcolor);
         height: 1.5rem;
         font-size: 1.1rem;
     }
     .editButton {
         margin-top: 3%;
-        width: 10%;
+        width: 2rem;
         aspect-ratio: 1/1;
         background-color: #0B132B;
         border-radius: 8px;
@@ -308,7 +330,6 @@ footer p {
     }
     aside {
         display: block;
-        background-color: brown;
         grid-column: 4;
         grid-row: 2;
         background-image: linear-gradient(to top, var(--color-theme), var(--bgcolor), var(--bgcolor));
@@ -342,15 +363,8 @@ footer p {
         align-content: center;
     }
     main a {
-        background-color: #3b4153;
-        text-decoration: none;
-        flex-wrap: wrap;
         width: 20%;
-        justify-content: center;
-        color: black;
-        font-weight: bold;
         border-radius: 25px;
-        border: black 2px solid;
         align-content: center;
     }
     section {
@@ -369,9 +383,5 @@ footer p {
 }
 /* Desktop grande */
 @media (min-width: 1280px) {
-    
-}
-/* Telas Largas */
-@media (min-width: 1440px) {
     
 }

@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         editButton.className = 'editButton';
         deleteButton.className = 'editButton';
         divTask.className = 'tasks';
+        spanzin.style = 'width: 100%';
         // Relacionamento de botões:
         spanzin.innerText = batata[i];
         editButton.innerHTML = '&#x270D;';
@@ -222,6 +223,7 @@ menuTasks.addEventListener('keydown', (e) => {
     const taskAtual = e.target.closest('p');
     if (input == '' || !taskAtual) return;
     const spanzin = document.createElement('span');
+    spanzin.style = 'width: 100%';
     spanzin.append(input);
     e.target.replaceWith(spanzin);
     tasksCalc()
