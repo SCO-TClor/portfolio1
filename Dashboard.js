@@ -182,7 +182,7 @@ taskButton.addEventListener('click', () => {
     divTask.append(inputTaskCriado);
     divTask.append(editButton);
     divTask.append(deleteButton);
-    menuTasks.append(divTask);
+    menuTasks.prepend(divTask);
     inputTaskCriado.focus();
 });
 // Botões de edição:
