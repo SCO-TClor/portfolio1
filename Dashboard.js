@@ -1,18 +1,23 @@
 // Declaração de variáveis:
 let momentoDoDia;
 let temConteudo = false;
-const taskButton = document.getElementById('button');                       // Auto-explicativo
-const menuTasks = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
+const taskButton = document.getElementById('button');                      // Auto-explicativo
+const taskMenu = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
+const calcMenu = document.getElementById('aside');                         // Shortcut para a calculadora
+const calcTable = document.getElementsByClassName('calcBase');             // Shortcut para a base da calculadora
+const calcAnswer = document.getElementById('calcAnswer');                  // Shortcut para o display das respostas da calculadora
+
+
 // Tasks Loader:
 document.addEventListener('DOMContentLoaded', () => {
     const batata = (JSON.parse(localStorage.getItem('tasks')) || 0);
     console.log(batata);
     const ventilador_8_helices = batata.length > 0 ? true : false;
     if (ventilador_8_helices) {
-        menuTasks.innerHTML = '';
+        taskMenu.innerHTML = '';
     }
     else {
-        menuTasks.textContent = 'Digite + para adicionar uma nova tarefa';
+        taskMenu.textContent = 'Digite + para adicionar uma nova tarefa';
     };
     for (let i = 0; i < batata.length; i++) {
         // Criação das Tasks:
@@ -39,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         divTask.append(spanzin);
         divTask.append(editButton);
         divTask.append(deleteButton);
-        menuTasks.append(divTask);
+        taskMenu.append(divTask);
     };
     console.log(batata.length);
 });
@@ -129,33 +134,33 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
-// Calculo do texto do menuTasks:
+// Calculo do texto do taskMenu:
 function temContent(conteudo) {
     if (conteudo) {
-        menuTasks.innerHTML = '';
+        taskMenu.innerHTML = '';
     }
     else {
-        menuTasks.textContent = 'Digite + para adicionar uma nova tarefa';
+        taskMenu.textContent = 'Digite + para adicionar uma nova tarefa';
     };
 };
 // Calculo da quantidade de tasks ativas:
 function tasksCalc() {
     let listaTasks = [];
-    const listinha = menuTasks.querySelectorAll('p>span');
+    const listinha = taskMenu.querySelectorAll('p>span');
     const taskNum = listinha.length;
     console.log(taskNum);
     for (let i = 0; i < taskNum; i++) {
-        listaTasks[i] = menuTasks.querySelectorAll('p>span')[i].innerText;
+        listaTasks[i] = taskMenu.querySelectorAll('p>span')[i].innerText;
     };
     localStorage.setItem('tasks', JSON.stringify(listaTasks));
     console.log(localStorage)
-    //const listinha = menuTasks.querySelectorAll('p>span')[0].innerText;
+    //const listinha = taskMenu.querySelectorAll('p>span')[0].innerText;
     // listaTasks = {
     // };
 };
 // Criador de tasks:
 taskButton.addEventListener('click', () => {
-    if (menuTasks.querySelector('p') == null) {
+    if (taskMenu.querySelector('p') == null) {
         temConteudo = true;
         temContent(temConteudo);
     };
@@ -183,20 +188,20 @@ taskButton.addEventListener('click', () => {
     divTask.append(inputTaskCriado);
     divTask.append(editButton);
     divTask.append(deleteButton);
-    menuTasks.prepend(divTask);
+    taskMenu.prepend(divTask);
     inputTaskCriado.focus();
 });
 // Botões de edição:
-menuTasks.addEventListener('click', (e) => {
+taskMenu.addEventListener('click', (e) => {
     // Botões de editar e excluir task atual:
     const taskAtual = e.target.closest('p');
     const botaoDeEdicao = e.target.closest('button');
-    if (!botaoDeEdicao || !menuTasks.contains(botaoDeEdicao)) return;
+    if (!botaoDeEdicao || !taskMenu.contains(botaoDeEdicao)) return;
     if (!botaoDeEdicao.classList.contains('editButton')) return;
     // Botão de deletar:
     if (botaoDeEdicao.dataset.cargoBotao === 'deleta') {
         taskAtual.remove();
-        if (menuTasks.querySelector('p') == null) {
+        if (taskMenu.querySelector('p') == null) {
             temConteudo = false;
             temContent(temConteudo);
         };
@@ -216,7 +221,7 @@ menuTasks.addEventListener('click', (e) => {
     };
 });
 // Transformador em texto:
-menuTasks.addEventListener('keydown', (e) => {
+taskMenu.addEventListener('keydown', (e) => {
     if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'text') return;
     if (e.key !== 'Enter' || e.keyCode !== 13) return;
     const input = e.target.value.trim();
@@ -227,4 +232,10 @@ menuTasks.addEventListener('keydown', (e) => {
     spanzin.append(input);
     e.target.replaceWith(spanzin);
     tasksCalc()
+});
+// calcMenu
+// calcTable
+// calcAnswer
+document.getElementById('calc1').addEventListener('click', (e) => {
+    calcAnswer.textContent = 'sexo';
 });
