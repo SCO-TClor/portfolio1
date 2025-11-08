@@ -3,10 +3,6 @@ let momentoDoDia;
 let temConteudo = false;
 const taskButton = document.getElementById('button');                      // Auto-explicativo
 const taskMenu = document.getElementById('taskMenu');                      // Div onde as tasks ficam localizadas
-const calcMenu = document.getElementById('aside');                         // Shortcut para a calculadora
-const calcTable = document.getElementsByClassName('calcBase');             // Shortcut para a base da calculadora
-const calcAnswer = document.getElementById('calcAnswer');                  // Shortcut para o display das respostas da calculadora
-
 
 // Tasks Loader:
 document.addEventListener('DOMContentLoaded', () => {
@@ -75,7 +71,7 @@ function mudaTempo() {
     //Momento do dia e quanto tempo
     let minFalt;
     let horasFalt;
-    if (horaAtual >= 0 && horaAtual < 12) {
+    if (horaAtual >= 3 && horaAtual < 12) {
         if (minutoAtual == 0) {
             minFalt = 0;
             horasFalt = 12 - horaAtual;
@@ -101,15 +97,27 @@ function mudaTempo() {
         momentoDoDia = 'tarde';
         themeChanger(momentoDoDia);
     }
-    else if (horaAtual >= 18 && horaAtual < 24) {
-        if (minutoAtual == 0) {
-            minFalt = 0;
-            horasFalt = 24 - horaAtual;
+    else if ((horaAtual >= 18 && horaAtual < 24) || (horaAtual >= 0 && horaAtual < 3)) {
+        if (horaAtual >= 18 && horaAtual < 24) {
+            if (minutoAtual == 0) {
+                minFalt = 0;
+                horasFalt = 24 - horaAtual;
+            }
+            else if (minutoAtual != 0) {
+                minFalt = 60 - minutoAtual;
+                horasFalt = 23 - horaAtual;
+            };
         }
-        else if (minutoAtual != 0) {
-            minFalt = 60 - minutoAtual;
-            horasFalt = 23 - horaAtual;
-        };
+        else if (horaAtual >= 0 && horaAtual < 3) {
+            if (minutoAtual == 0) {
+                minFalt = 0;
+                horasFalt = 3 - horaAtual;
+            }
+            else if (minutoAtual != 0) {
+                minFalt = 60 - minutoAtual;
+                horasFalt = 2 - horaAtual;
+            };
+        }
         document.getElementById('momento').innerHTML = `Noite - ${horasFalt}h ${minFalt} min restantes`;
         momentoDoDia = 'noite';
         themeChanger(momentoDoDia);
@@ -233,9 +241,107 @@ taskMenu.addEventListener('keydown', (e) => {
     e.target.replaceWith(spanzin);
     tasksCalc()
 });
-// calcMenu
-// calcTable
-// calcAnswer
-document.getElementById('calc1').addEventListener('click', (e) => {
-    calcAnswer.textContent = 'sexo';
+// calcMenu = document.getElementById('aside');
+// calcTable = document.getElementsByClassName('calcBase');
+// calcAnswer = document.getElementById('calcAnswerInner');
+let calcStatus = false;
+let vai_pro_temp = false;
+let operadorCalc = null;
+const calcButtons =  document.getElementsByClassName('calcButton');
+const calcMenu = document.getElementById('aside');                         // Shortcut para a calculadora
+const calcTable = document.getElementsByClassName('calcBase');             // Shortcut para a base da calculadora
+const calcAnswer = document.getElementById('calcAnswerInner');             // Shortcut para o display das respostas da calculadora
+const calcTemp = document.getElementById('calcTemp');                      // Display temporário calc
+calcMenu.addEventListener('click', (e) => {
+    const target = e.target;
+    const targetText = target.textContent;
+
+    if (target.type!='button') return;
+    console.log('é um botão');
+
+    if (calcAnswer.textContent != '' && calcAnswer.textContent != '0') {
+        calcStatus = true;
+    }
+    else {
+        calcStatus = false
+    };
+    console.log(targetText);
+
+    if (targetText == '×' || targetText == '+' || targetText == '-' || targetText == '÷' || targetText == '=') {
+        if (!calcStatus) return;
+        if (calcTemp.textContent =='') {
+            vai_pro_temp = true;
+        };
+        if (targetText != '=') {
+            operadorCalc = targetText;
+        }
+        else {
+            if (operadorCalc == null) return;
+            if (calcTemp.textContent == '') return;
+            const op2 = parseFloat(calcAnswer.textContent);
+            const op1 = parseFloat(calcTemp.textContent);
+            let resposta;
+            switch (operadorCalc) {
+                case '×':
+                    resposta = op1*op2;
+                    break;
+                case '+':
+                    resposta = op1+op2;
+                    break;
+                case '-':
+                    resposta = op1-op2;
+                    break;
+                case '÷':
+                    resposta = op1/op2;
+                    break;
+                default:
+                    console.log('erro de operador!!');
+            };
+            calcAnswer.textContent = resposta;
+            calcTemp.textContent = '';
+            operadorCalc = null;
+        };
+    }
+    else if (targetText == '.') {
+        if (calcAnswer.textContent == '0' || calcAnswer.textContent == '') {
+            calcAnswer.textContent = '0.';
+        }
+        else if (vai_pro_temp) {
+            calcTemp.innerHTML = calcAnswer.textContent;
+            calcAnswer.textContent = '';
+            calcAnswer.textContent = '0'+targetText;
+            vai_pro_temp = false;
+        }
+        else {
+            for (i=0; i < calcAnswer.textContent.length; i++) {
+                const abc = calcAnswer.textContent[i];
+                if (abc == '.') return;
+            };
+            calcAnswer.textContent = calcAnswer.textContent+'.';
+        };
+    }
+    else if (targetText == '⌫') {
+        if (calcAnswer.textContent == '' || calcAnswer.textContent == '0') return;
+        calcAnswer.textContent = calcAnswer.textContent.slice(0,-1);
+        if (calcAnswer.textContent == '') {
+            calcAnswer.textContent = '0';
+        };
+    }
+    else if (targetText == 'C') {
+        calcAnswer.textContent = '0';
+    }
+    else {
+        if (vai_pro_temp) {
+            calcTemp.innerHTML = calcAnswer.textContent;
+            calcAnswer.textContent = '';
+            calcAnswer.textContent = targetText;
+            vai_pro_temp = false;
+        }
+        else {
+            if (calcAnswer.textContent == '0') {
+                calcAnswer.textContent = '';
+            };
+            calcAnswer.textContent = calcAnswer.textContent+targetText;
+        };
+    };
 });
