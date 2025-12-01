@@ -162,7 +162,7 @@ function tasksCalc() {
     };
     localStorage.setItem('tasks', JSON.stringify(listaTasks));
     console.log(localStorage)
-    //const listinha = taskMenu.querySelectorAll('p>span')[0].innerText;
+    // const listinha = taskMenu.querySelectorAll('p>span')[0].innerText;
     // listaTasks = {
     // };
 };
